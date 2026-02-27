@@ -1,0 +1,27 @@
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+rootProject.name = "TeristaSpace"
+include ':app'
+include ':Bcore'
+include ':black-reflection'
+include ':compiler'
+include ':native'
+include ':sandbox'
+include ':proxy'
+include ':virtual-device'
+include ':virtual-services'
+include ':virtual-fs'
+include ':virtual-process'

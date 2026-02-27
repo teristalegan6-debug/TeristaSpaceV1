@@ -1,0 +1,18 @@
+plugins {
+    id("java-library")
+    alias(libs.plugins.kotlin.kapt)
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
+
+dependencies {
+    implementation(project(':black-reflection'))
+    implementation(libs.javapoet)
+    implementation(libs.autoservice.annotations)
+    kapt(libs.autoservice)
+    
+    testImplementation(libs.junit)
+}

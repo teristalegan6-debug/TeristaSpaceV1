@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    
+    <!-- Base application theme -->
+    <style name="Base.Theme.TeristaSpace" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/terista_primary</item>
+        <item name="colorPrimaryVariant">@color/terista_primary_dark</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSecondary">@color/terista_accent</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <item name="android:colorBackground">@color/terista_background</item>
+        <item name="colorOnBackground">@color/black</item>
+        <item name="colorSurface">@color/terista_surface</item>
+        <item name="colorOnSurface">@color/black</item>
+        <item name="colorError">@color/terista_error</item>
+        <item name="android:statusBarColor">@color/terista_primary_dark</item>
+    </style>
+
+    <style name="Theme.TeristaSpace" parent="Base.Theme.TeristaSpace" />
+    
+</resources>

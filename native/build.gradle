@@ -1,0 +1,61 @@
+plugins {
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.jetbrains.kotlin.android)
+}
+
+android {
+    namespace = "com.terista.space.native"
+    compileSdk = 35
+
+    defaultConfig {
+        minSdk = 24
+        
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles("consumer-rules.pro")
+        
+        externalNativeBuild {
+            ndkBuild {
+                cFlags("-DANDROID", "-ffunction-sections", "-fdata-sections", "-w")
+                cppFlags("-DANDROID", "-ffunction-sections", "-fdata-sections", "-w", "-std=c++17")
+                abiFilters("arm64-v8a", "armeabi-v7a")
+            }
+        }
+        
+        ndk {
+            abiFilters += listOf("arm64-v8a", "armeabi-v7a")
+        }
+    }
+
+    buildTypes {
+        release {
+            isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
+    }
+    
+    externalNativeBuild {
+        ndkBuild {
+            path("src/main/cpp/Android.mk")
+        }
+    }
+    
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
+    }
+    kotlinOptions {
+        jvmTarget = "21"
+    }
+}
+
+dependencies {
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.material)
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
+}

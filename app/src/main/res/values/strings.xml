@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TeristaSpace</string>
+    <string name="add_virtual_app">Add Virtual App</string>
+    <string name="virtual_apps">Virtual Apps</string>
+    <string name="no_apps_installed">No virtual apps installed</string>
+    <string name="install_app">Install App</string>
+    <string name="uninstall_app">Uninstall App</string>
+    <string name="launch_app">Launch App</string>
+    <string name="stop_app">Stop App</string>
+    <string name="app_running">Running</string>
+    <string name="app_stopped">Stopped</string>
+    <string name="virtual_engine_error">Virtual Engine Error</string>
+    <string name="installation_failed">Installation Failed</string>
+    <string name="launch_failed">Launch Failed</string>
+</resources>

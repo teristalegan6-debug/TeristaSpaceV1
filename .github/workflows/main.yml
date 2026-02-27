@@ -24,18 +24,78 @@ jobs:
     - name: Setup Android SDK
       uses: android-actions/setup-android@v3
 
+    - name: Clear Gradle Cache
+      run: |
+        echo "=== Clearing Gradle Cache ==="
+        rm -rf ~/.gradle/caches/
+        rm -rf ~/.gradle/wrapper/dists/
+        rm -rf .gradle/
+        echo "✓ Gradle cache cleared"
+
     - name: Install Build Tools + NDK
       run: |
+        echo "=== Installing Android SDK Components ==="
         sdkmanager "platform-tools" "build-tools;35.0.0" "platforms;android-35" "ndk;29.0.13846066"
+        echo "ndk.dir=$ANDROID_SDK_ROOT/ndk/29.0.13846066" >> local.properties
+        echo "✓ SDK components installed"
+
+    - name: Verify Project Structure
+      run: |
+        echo "=== Verifying Project Structure ==="
+        echo "Root build.gradle:"
+        ls -la build.gradle || echo "❌ build.gradle NOT FOUND"
+        echo ""
+        echo "Settings.gradle:"
+        ls -la settings.gradle || echo "❌ settings.gradle NOT FOUND"
+        echo ""
+        echo "Compiler module:"
+        ls -la compiler/build.gradle || echo "❌ compiler/build.gradle NOT FOUND"
+        echo ""
+        echo "Native module:"
+        ls -la native/build.gradle || echo "❌ native/build.gradle NOT FOUND"
+        ls -la native/src/main/cpp/Android.mk || echo "❌ Android.mk NOT FOUND"
+        ls -la native/src/main/cpp/Application.mk || echo "❌ Application.mk NOT FOUND"
+        echo ""
+        echo "All modules:"
+        ls -la */build.gradle 2>/dev/null || true
+        echo "✓ Structure verification complete"
 
     - name: Make Gradle executable
-      run: chmod +x ./gradlew
+      run: |
+        echo "=== Setting Gradle Permissions ==="
+        chmod +x ./gradlew
+        echo "✓ Gradle is now executable"
+
+    - name: Clean Project
+      run: |
+        echo "=== Running Gradle Clean ==="
+        ./gradlew clean --info
+        echo "✓ Clean completed"
 
     - name: Build Debug APK
-      run: ./gradlew clean assembleDebug --stacktrace
+      run: |
+        echo "=== Starting Debug Build ==="
+        ./gradlew assembleDebug --stacktrace --info 2>&1 | tee build-log.txt
+        echo "✓ Build command executed"
+
+    - name: Upload Build Log (on failure)
+      if: failure()
+      uses: actions/upload-artifact@v4
+      with:
+        name: build-failure-log
+        path: build-log.txt
+
+    - name: Check APK Output
+      run: |
+        echo "=== Checking APK Output ==="
+        ls -la app/build/outputs/apk/debug/ || echo "❌ APK output directory not found"
+        find . -name "*.apk" -type f 2>/dev/null || echo "❌ No APK files found"
+        echo "✓ APK check complete"
 
     - name: Upload APK
+      if: success()
       uses: actions/upload-artifact@v4
       with:
         name: TeristaSpace-debug-apk
         path: app/build/outputs/apk/debug/*.apk
+        

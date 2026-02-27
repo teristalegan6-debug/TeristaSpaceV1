@@ -1,4 +1,6 @@
-// Top-level build file
+// Top-level build file - DO NOT add repositories here
+// Repositories are managed centrally in settings.gradle
+
 plugins {
     alias(libs.plugins.android.application) apply false
     alias(libs.plugins.android.library) apply false
@@ -6,13 +8,6 @@ plugins {
     alias(libs.plugins.kotlin.kapt) apply false
 }
 
-allprojects {
-    repositories {
-        google()
-        mavenCentral()
-    }
-}
-
-tasks.register("clean", Delete::class) {
-    delete(rootProject.buildDir)
-}
+// No buildscript block
+// No repositories block  
+// No allprojects block

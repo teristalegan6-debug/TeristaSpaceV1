@@ -6,6 +6,7 @@ plugins {
 android {
     namespace = "com.terista.space.native"
     compileSdk = 35
+    ndkVersion = "29.0.13846066"  // ADD THIS LINE - Match CI NDK version
 
     defaultConfig {
         minSdk = 24
